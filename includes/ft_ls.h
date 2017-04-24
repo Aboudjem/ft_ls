@@ -15,6 +15,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <dirent.h>
 
 # define CHECK_BIT(var, pos)	(var & pos)
 # define L	1
@@ -50,6 +51,8 @@ typedef struct		s_flags
 	int				rr;
 }					t_flags;
 
+void				print_flags(t_flags f);
+int					check_flags(char *argv, t_flags *f);
 
 /*
 ** libft

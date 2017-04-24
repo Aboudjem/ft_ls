@@ -1,65 +1,31 @@
 #include "ft_ls.h"
-void	print_flags(t_flags f)
-{
-	if (CHECK_BIT(f.bit, L))
-		ft_putstr("[l]");
-	if (CHECK_BIT(f.bit, A))
-		ft_putstr("[a]");
-	if (CHECK_BIT(f.bit, R))
-		ft_putstr("[r]");
-	if (CHECK_BIT(f.bit, T))
-		ft_putstr("[t]");
-	if (CHECK_BIT(f.bit, RR))
-		ft_putstr("[R]");
-}
 
-void	check_flags(t_flags *f, char c)
-{
-	if (c == 'l')
-		f->bit |= L;
-	else if (c == 'a')
-		f->bit |= A;
-	else if (c == 'r')
-		f->bit |= R;
-	else if (c == 't')
-		f->bit |= T;
-	else if (c == 'R')
-		f->bit |= RR;
-	else
-	{
-		printf("ls: illegal option -- %c\n", c);
-		printf("usage: ls [-lartR] [file ...]\n");
-		exit (0);
-	}
-}
 
-int		checking(char *argv, t_flags *f)
+void		ls_simple(void)
 {
-	if (argv[0] == '-')
-	{
-		(argv++);
-		while (*argv)
-		{
-			check_flags(f, *argv);
-			(argv++);
-		}
-		return (1);
-	}
-	return(0);
+	DIR *dir;
+
+	dir = opendir(".");
+	readdir(dir);
 }
 
 int			main(int argc, char *argv[])
 {
-	t_flags f;
 	int i;
+	t_flags f;
 	
 	i = 1;
-
+	if (argc == 1)
+		ls_simple();
+		while (i < argc && check_flags(argv[i], &f))
+			ft_putnbr(i++);
 		while (i < argc)
 		{
-			checking(argv[i], &f);
+			ft_putstr("LA");
 			i++;
 		}
+		// while (i < argc)
+	
 	print_flags(f);
 	return(0);
 }
