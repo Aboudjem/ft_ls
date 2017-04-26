@@ -51,6 +51,12 @@ typedef struct		s_flags
 	int				rr;
 }					t_flags;
 
+typedef struct		s_ls
+{
+	char			*name;
+	struct s_ls		*next;
+}					t_ls;
+
 void				print_flags(t_flags f);
 int					check_flags(char *argv, t_flags *f);
 
