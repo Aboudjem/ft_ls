@@ -1,14 +1,42 @@
 #include "ft_ls.h"
 
 
-void	sort_alpha(t_ls *lst)
+
+
+t_ls	*add_list(t_ls *lst, char *file)
 {
-	t_ls	*tmp;
+t_ls *tmp;
+
+if (!lst)
+{	
+	if (!(lst = (malloc(sizeof(t_ls)))))
+		exit(0);
+	lst->name = ft_strdup(file);
+	lst->next = NULL;
+	return(lst);
+}
+else
+	{
+		tmp = lst;
+		while (tmp->next)
+		{
+			tmp = tmp->next;
+		}
+		tmp->name = ft_strdup(file);
+		tmp->next = NULL;
+	}
+	return(tmp);
+}
+
+void 	print_lst(t_ls *lst)
+{
+	t_ls *tmp;
 	tmp = NULL;
 	tmp = lst;
-	while(tmp)
+
+	while (tmp)
 	{
-		printf("--[%s]\n", tmp->name);
+		ft_putstr(tmp->name);
 		tmp = tmp->next;
 	}
 }
@@ -19,17 +47,15 @@ void	stock_list(t_ls *lst, struct dirent *file, DIR *dir)
 
 	i = 0;
 	while ((file = readdir(dir)) != NULL)
-	{
-		if ((lst = ft_memalloc(sizeof(t_ls))) == NULL)
-			exit (1);
-		lst->name = ft_strdup(file->d_name);
-		// ft_putstr(lst->name);
-		//ft_putstr("\n");
-		lst->next = NULL;
-		lst = lst->next;
-		i++;
-		sort_alpha(lst);
-	}
+		{
+			lst = add_list(lst, file->d_name);
+			lst = lst->next;
+			ft_putstr(lst->name);
+		}
+		t_ls *tmp;
+		tmp = lst;
+		print_lst(tmp);
+
 }
 
 
@@ -46,7 +72,7 @@ void		ls_simple(void)
 			ft_putstr("DIR = NULL\n");
 			exit(0);
 		}
-		stock_list(&lst, file, dir);
+		stock_list(lst, file, dir);
 		if (closedir(dir) == -1)
 			exit(-1);
 	}
