@@ -49,8 +49,8 @@ void	stock_list(t_ls *lst, struct dirent *file, DIR *dir)
 	while ((file = readdir(dir)) != NULL)
 		{
 			lst = add_list(lst, file->d_name);
-			lst = lst->next;
 			ft_putstr(lst->name);
+			lst = lst->next;
 		}
 		t_ls *tmp;
 		tmp = lst;
