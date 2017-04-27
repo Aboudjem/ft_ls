@@ -16,7 +16,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@echo ">>>>> Génération de LEM_IN"
+	@echo ">>>>> Génération de FT_LS"
 	@gcc $(OBJS) -o $(NAME)
 	@echo "Terminée"
 

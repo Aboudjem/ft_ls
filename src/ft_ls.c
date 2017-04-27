@@ -1,39 +1,43 @@
 #include "ft_ls.h"
+#include <stdio.h>
 
+t_ls 	*new_lst(char *name)
+{
+	t_ls *ls;
 
+	if(!(ls = (t_ls*)ft_memalloc(sizeof(t_ls))))
+		exit (0);
+	ls->name = ft_strdup(name);
+	ls->next = NULL;
+	return (ls);
+}
 
 
 t_ls	*add_list(t_ls *lst, char *file)
 {
-t_ls *tmp;
+	t_ls *tmp;
 
-if (!lst)
-{	
-	if (!(lst = (malloc(sizeof(t_ls)))))
-		exit(0);
-	lst->name = ft_strdup(file);
-	lst->next = NULL;
-	return(lst);
-}
-else
-	{
-		tmp = lst;
-		while (tmp->next)
-		{
-			tmp = tmp->next;
-		}
-		tmp->name = ft_strdup(file);
-		tmp->next = NULL;
+	if (!lst->name)
+	{	
+		lst->name = ft_strdup(file);
+		lst->next = NULL;
+		return(lst);
 	}
-	return(tmp);
+	else
+	{
+	 	tmp = lst;
+	 	while (tmp->next)
+	 		tmp = tmp->next;
+		tmp->next = new_lst(file);
+	}
+	return(lst); // on renvoi le maillon de depart de list;
 }
-
+#include "string.h"
 void 	print_lst(t_ls *lst)
 {
 	t_ls *tmp;
-	tmp = NULL;
-	tmp = lst;
 
+	tmp = lst;
 	while (tmp)
 	{
 		ft_putstr(tmp->name);
@@ -41,28 +45,30 @@ void 	print_lst(t_ls *lst)
 	}
 }
 
-void	stock_list(t_ls *lst, struct dirent *file, DIR *dir)
+t_ls	*stock_list(t_ls *lst, struct dirent *file, DIR *dir)
 {
 	int i;
 
 	i = 0;
-	while ((file = readdir(dir)) != NULL)
-		{
-			lst = add_list(lst, file->d_name);
-			ft_putstr(lst->name);
-			lst = lst->next;
-		}
-		t_ls *tmp;
-		tmp = lst;
-		print_lst(tmp);
 
+	if(!(file = readdir(dir)))
+	{
+		perror("readdir :");
+		return(0);
+	}
+	while((file = readdir(dir)))
+		lst = add_list(lst, file->d_name); 
+	return (lst);
 }
 
 
 void		ls_simple(void)
 	{
 		t_ls *lst;
-		lst = NULL;
+		if(!(lst = (t_ls*)ft_memalloc(sizeof(t_ls))))  // initialise le premier element de ma list vaux mieux en faire une fct
+			exit (0);
+		lst->name = NULL;
+		lst->next = NULL;
 		DIR *dir;
 		dir = NULL;
 		struct dirent *file = NULL;
@@ -73,6 +79,7 @@ void		ls_simple(void)
 			exit(0);
 		}
 		stock_list(lst, file, dir);
+		print_lst(lst);	
 		if (closedir(dir) == -1)
 			exit(-1);
 	}
