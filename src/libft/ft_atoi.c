@@ -12,12 +12,6 @@
 
 #include "ft_ls.h"
 
-void		ft_quit(void)
-{
-	ft_putstr_fd("ERROR", 2);
-	exit(0);
-}
-
 static int	is_neg(int neg, int nbr)
 {
 	if (neg == 1)
@@ -49,6 +43,6 @@ int			ft_atoi(const char *str)
 		i++;
 	}
 	if (nbr > 2147483647 || nbr < -2147483648)
-		ft_quit();
+		exit(0);
 	return (is_neg(neg, (int)nbr));
 }

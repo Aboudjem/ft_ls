@@ -1,6 +1,6 @@
 #include "ft_ls.h"
 
-void	set_flags(t_flags *f, char c)
+static void	set_flags(t_flags *f, char c)
 {
 	if (c == 'l')
 		f->bit |= L;
@@ -26,7 +26,6 @@ int		check_flags(char *argv, t_flags *f)
 	{
 		while (*argv)
 			set_flags(f, *(argv++));
-		return (1);
 	}
-	return(0);
+	return (f->bit > 0 ? 1 : 0);
 }

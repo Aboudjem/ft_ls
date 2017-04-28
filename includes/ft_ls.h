@@ -12,10 +12,18 @@
 
 #ifndef FT_LS_H
 # define FT_LS_H
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <dirent.h>
+
+#include <pwd.h>
+#include <grp.h>
+#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <uuid/uuid.h>
 
 # define CHECK_BIT(var, pos)	(var & pos)
 # define L	1
@@ -23,10 +31,6 @@
 # define R	4
 # define T	8
 # define RR	16
-# define FINISH 32
-# define PRINT	64
-
-# define BUFF_SIZE 20
 
 # define STOP      	"\033[0m"
 # define BOLD       "\033[1m"
@@ -41,6 +45,11 @@
 # define CYAN    	"\033[36m"
 # define WHITE   	"\033[37m"
 
+typedef struct dirent 	t_dir;
+typedef struct stat 	t_stat;
+typedef struct passwd 	t_pwd;
+typedef struct group 	t_grp;
+
 typedef struct		s_flags
 {
 	int				bit;
@@ -53,6 +62,12 @@ typedef struct		s_flags
 
 typedef struct		s_ls
 {
+	char			*mod;
+	unsigned long	link;
+	char			*user;
+	char			*group;
+	size_t			size;
+	char			*time;
 	char			*name;
 	struct s_ls		*next;
 }					t_ls;
@@ -60,25 +75,42 @@ typedef struct		s_ls
 void				print_flags(t_flags f);
 int					check_flags(char *argv, t_flags *f);
 
+t_ls 				*new_lst(t_dir *file, t_stat buf);
+t_ls				*add_list(t_ls *lst, t_dir *file, t_stat buf);
+void			 	print_lst(t_ls *lst);
+t_ls				*stock_list(t_ls *lst, t_dir *file, DIR *dir);
+void				ls_simple(void);
+
+/*
+** get
+*/
+
+char				get_type(size_t n);
+char				*get_time(time_t n);
+char				*get_uid(unsigned int n);
+char				*get_gid(unsigned int n);
+char				*get_mod(t_stat buf, char type);
 /*
 ** libft
 */
-int					ft_atoi(const char *str);
-void				ft_bzero(void *s, size_t n);
-void				ft_free_tab(char **str);
-int					ft_isdigit(int c);
-int					ft_isdig_str(char *ptr);
-void				*ft_memalloc(size_t size);
-void				*ft_memset(void *b, int c, size_t len);
-void				ft_putchar(char c);
+
 void				ft_putnbr(int n);
-void				ft_putstr(char const *s);
-void				ft_putstr_fd(char const *s, int fd);
-char				*ft_strchr(char *s, int c);
-int					ft_strcmp(const char *s1, const char *s2);
-char				*ft_strdup(const char *s1);
-size_t				ft_strlen(const char *s);
-char				**ft_strsplit(char *s, char c);
+int					ft_isdigit(int c);
+void				ft_putchar(char c);
 int					tab_len(char **tab);
+char				*ft_strnew(size_t size);
+void				ft_free_tab(char **str);
+int					ft_isdig_str(char *ptr);
+int					ft_atoi(const char *str);
+void				ft_putstr(char const *s);
+size_t				ft_strlen(const char *s);
+void				*ft_memalloc(size_t size);
+char				*ft_strchr(char *s, int c);
+char				*ft_strdup(const char *s1);
+void				ft_bzero(void *s, size_t n);
+char				**ft_strsplit(char *s, char c);
+void				ft_putstr_fd(char const *s, int fd);
+void				*ft_memset(void *b, int c, size_t len);
+int					ft_strcmp(const char *s1, const char *s2);
 
 #endif

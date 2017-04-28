@@ -2,7 +2,7 @@
 NAME = ft_ls
 
 #	GCC flags
-CFLAGS =  -Wall -Wextra -Werror
+CFLAGS =  -Weverything
 #	Includes directories
 INC_TR = includes
 INCLUDES += $(addprefix -iquote , $(INC_TR))
