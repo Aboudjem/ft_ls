@@ -7,6 +7,7 @@ t_ls 	*new_lst(t_dir *file, t_stat buf)
 	if(!(ls = (t_ls*)ft_memalloc(sizeof(t_ls))))
 		exit (0);
 	ls->mod = get_mod(buf, get_type(file->d_type));
+	ls->link = buf.st_nlink;
 	ls->user = get_uid(buf.st_uid);
 	ls->group = get_gid(buf.st_gid);
 	ls->size = buf.st_size;
@@ -23,6 +24,7 @@ t_ls	*add_list(t_ls *lst, t_dir *file, t_stat buf)
 	if (!lst->name)
 	{	
 		lst->mod = get_mod(buf, get_type(file->d_type));
+		lst->link = buf.st_nlink;
 		lst->user = get_uid(buf.st_uid);
 		lst->group = get_gid(buf.st_gid);
 		lst->size = buf.st_size;
@@ -48,8 +50,8 @@ void 	print_lst(t_ls *lst)
 	tmp = lst;
 	while (tmp)
 	{
-		printf("[%s][%s][%s][%d][%s][%s]\n", tmp->mod, tmp->user, tmp->group, tmp->size, tmp->time, tmp->name);
-		// ft_putstr(tmp->name);
+		printf("[%s][%d][%s][%s][%d][%s][%s]\n", tmp->mod, tmp->link, tmp->user,
+		tmp->group, tmp->size, tmp->time, tmp->name);
 		tmp = tmp->next;
 	}
 }
