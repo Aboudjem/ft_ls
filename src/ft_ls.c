@@ -1,67 +1,23 @@
 #include "ft_ls.h"
 
-t_ls 	*new_lst(t_dir *file, t_stat buf)
-{
-	t_ls *ls;
-
-	if(!(ls = (t_ls*)ft_memalloc(sizeof(t_ls))))
-		exit (0);
-	ls->mod = get_mod(buf, get_type(file->d_type));
-	ls->link = buf.st_nlink;
-	ls->user = get_uid(buf.st_uid);
-	ls->group = get_gid(buf.st_gid);
-	ls->size = buf.st_size;
-	ls->time = get_time(buf.st_mtime);
-	ls->name = ft_strdup(file->d_name);
-	ls->next = NULL;
-	return (ls);
-}
-
-t_ls	*add_list(t_ls *lst, t_dir *file, t_stat buf)
-{
-	t_ls *tmp;
-
-	if (!lst->name)
-	{	
-		lst->mod = get_mod(buf, get_type(file->d_type));
-		lst->link = buf.st_nlink;
-		lst->user = get_uid(buf.st_uid);
-		lst->group = get_gid(buf.st_gid);
-		lst->size = buf.st_size;
-		lst->time = get_time(buf.st_mtime);
-		lst->name = ft_strdup(file->d_name);
-		lst->next = NULL;
-		return(lst);
-	}
-	else
-	{
-	 	tmp = lst;
-	 	while (tmp->next)
-	 		tmp = tmp->next;
-		tmp->next = new_lst(file, buf);
-	}
-	return(lst); // on renvoi le maillon de depart de list;
-}
-
 void 	print_lst(t_ls *lst)
 {
 	t_ls *tmp;
-
 	tmp = lst;
+	sort_list(tmp);
 	while (tmp)
 	{
-		printf("[%s][%d][%s][%s][%d][%s][%s]\n", tmp->mod, tmp->link, tmp->user,
-		tmp->group, tmp->size, tmp->time, tmp->name);
+		ft_putstr(tmp->data.name);
+		ft_putstr(" ");
+		// printf("%s %zu %s %s %ld %s %s\n", tmp->data.mod, tmp->data.link, tmp->data.user,tmp->data.group, tmp->data.size, tmp->data.time, tmp->data.name);
 		tmp = tmp->next;
 	}
 }
 
 t_ls	*stock_list(t_ls *lst, t_dir *file, DIR *dir)
 {
-	int i;
 	t_stat buf;
 
-	i = 0;
 	if(!(file = readdir(dir)))
 	{
 		perror("readdir :");
@@ -76,46 +32,55 @@ t_ls	*stock_list(t_ls *lst, t_dir *file, DIR *dir)
 }
 
 void		ls_simple(void)
+{
+	t_ls *lst;
+	if(!(lst = (t_ls*)ft_memalloc(sizeof(t_ls))))  // initialise le premier element de ma list vaux mieux en faire une fct
+		exit (0);
+	DIR *dir;
+	dir = NULL;
+	struct dirent *file = NULL;
+	dir = opendir(".");
+	if (dir == NULL)
 	{
-		t_ls *lst;
-		if(!(lst = (t_ls*)ft_memalloc(sizeof(t_ls))))  // initialise le premier element de ma list vaux mieux en faire une fct
-			exit (0);
-		DIR *dir;
-		dir = NULL;
-		struct dirent *file = NULL;
-		dir = opendir(".");
-		if (dir == NULL)
-		{
-			ft_putstr("DIR = NULL\n");
-			exit(0);
-		}
-		stock_list(lst, file, dir);
-		print_lst(lst);	
-		if (closedir(dir) == -1)
-			exit(-1);
+		ft_putstr("DIR = NULL\n");
+		exit(0);
 	}
+	stock_list(lst, file, dir);
+	print_lst(lst);	
+	if (closedir(dir) == -1)
+		exit(-1);
+}
+
+void	init_flags(t_flags *f)
+{	
+	f->l = 0;
+	f->a = 0;
+	f->r = 0;
+	f->t = 0;
+	f->rr = 0;
+	f->bit = 0;
+}
 
 int			main(int argc, char *argv[])
+{
+	int i;
+	t_flags f;
+	init_flags(&f);
+
+	i = 1;
+	if (argc == 1)
+		ls_simple();
+	while (i < argc && check_flags(argv[i], &f))
+		ft_putnbr(i++);
+	while (i < argc)
 	{
-		int i;
-		t_flags f;
-
-		f.a = 0;
-
-		i = 1;
-		if (argc == 1)
-			ls_simple();
-		while (i < argc && check_flags(argv[i], &f))
-			ft_putnbr(i++);
-		while (i < argc)
-		{
-			if (!(opendir(argv[i])))
-				printf("ls: %s: No such file or directory\n", argv[i]);
-			else
-				printf("%s\n",argv[i]);
-			i++;
-		}
-		print_flags(f);
-		return(0);
+		if (!(opendir(argv[i])))
+			printf("ls: %s: No such file or directory\n", argv[i]);
+		else
+			printf("%s\n",argv[i]);
+		i++;
 	}
+	print_flags(f);
+	return(0);
+}
 

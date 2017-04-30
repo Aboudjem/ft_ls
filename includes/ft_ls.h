@@ -50,6 +50,7 @@ typedef struct stat 	t_stat;
 typedef struct passwd 	t_pwd;
 typedef struct group 	t_grp;
 
+
 typedef struct		s_flags
 {
 	int				bit;
@@ -60,23 +61,32 @@ typedef struct		s_flags
 	int				rr;
 }					t_flags;
 
-typedef struct		s_ls
+typedef struct 		s_data
 {
 	char			*mod;
-	unsigned long	link;
+	size_t			link;
 	char			*user;
 	char			*group;
-	size_t			size;
+	long			size;
 	char			*time;
 	char			*name;
+}					t_data;
+typedef struct		s_ls
+{
+	t_data			data;
 	struct s_ls		*next;
 }					t_ls;
+void	sort_list(t_ls *lst);
 
+// int					check_sort(t_ls *lst);
+void				init_flags(t_flags *f);
 void				print_flags(t_flags f);
 int					check_flags(char *argv, t_flags *f);
 
+void				add_infos(t_dir *file, t_stat buf, t_ls *ls);
 t_ls 				*new_lst(t_dir *file, t_stat buf);
 t_ls				*add_list(t_ls *lst, t_dir *file, t_stat buf);
+
 void			 	print_lst(t_ls *lst);
 t_ls				*stock_list(t_ls *lst, t_dir *file, DIR *dir);
 void				ls_simple(void);
@@ -112,5 +122,7 @@ char				**ft_strsplit(char *s, char c);
 void				ft_putstr_fd(char const *s, int fd);
 void				*ft_memset(void *b, int c, size_t len);
 int					ft_strcmp(const char *s1, const char *s2);
+char				*ft_strdup_color(const char *s1, char *color);
+
 
 #endif

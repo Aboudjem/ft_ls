@@ -22,19 +22,19 @@ char	*get_mod(struct stat buf, char type)
 char	get_type(size_t n)
 {
 if (n == DT_BLK)
-	return('-');
+	return('b');
 else if (n == DT_CHR)
-	return('-');
+	return('c');
 else if (n == DT_DIR)
 	return('d');
 else if (n == DT_FIFO)
-	return('-');
+	return('p');
 else if (n == DT_LNK)
 	return('l');
 else if (n == DT_REG)
 	return('-');
 else if (n == DT_SOCK)
-	return('-');
+	return('s');
 else if (n == DT_UNKNOWN)
 	return('-');
 return(0);
