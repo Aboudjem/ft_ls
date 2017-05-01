@@ -18,12 +18,17 @@ void	sort_reverse(t_ls *lst)
 
 	tmp = lst;
 	while (check_sort_reverse(tmp) == 0)
-	{
-		if (ft_strcmp(tmp->data.name, tmp->next->data.name) < 0)
 		{
-			swap_data(tmp);
-			tmp = lst;
+			while(tmp->next)
+				{
+				if (ft_strcmp(tmp->data.name, tmp->next->data.name) < 0)
+				{
+					swap_data(tmp);
+					tmp = lst;
+				}
+				else
+					tmp = tmp->next;
 		}
-		tmp = tmp->next;
+		tmp = lst;
 	}
 }

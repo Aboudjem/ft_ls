@@ -22,7 +22,7 @@ void	sort_list_time(t_ls *lst)
 		{
 			if (tmp->data.t < tmp->next->data.t)
 			{
-				// swap_data(tmp);
+				swap_data(tmp);
 				tmp = lst;
 			}
 			else
