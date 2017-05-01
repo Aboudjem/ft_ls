@@ -9,7 +9,6 @@ char	*ft_strdup_color(const char *s1, char *color)
 	char	*stop;
 
 	stop = STOP;
-
 	i = 0;
 	j = 0;
 	len = ft_strlen(s1) + ft_strlen(color) + ft_strlen(STOP);
@@ -33,7 +32,6 @@ char	*ft_strdup_color(const char *s1, char *color)
 		str[i+j] = stop[j];
 		j++;
 	}
-
 	str[i+j] = '\0';
 	return (str);
 }

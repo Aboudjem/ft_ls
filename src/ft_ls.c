@@ -8,8 +8,7 @@ void 	print_lst(t_ls *lst)
 	while (tmp)
 	{
 		ft_putstr(tmp->data.name);
-		ft_putstr(" ");
-		// printf("%s %zu %s %s %ld %s %s\n", tmp->data.mod, tmp->data.link, tmp->data.user,tmp->data.group, tmp->data.size, tmp->data.time, tmp->data.name);
+		ft_putstr("   ");
 		tmp = tmp->next;
 	}
 }
@@ -37,7 +36,6 @@ void		ls_simple(void)
 	if(!(lst = (t_ls*)ft_memalloc(sizeof(t_ls))))  // initialise le premier element de ma list vaux mieux en faire une fct
 		exit (0);
 	DIR *dir;
-	dir = NULL;
 	struct dirent *file = NULL;
 	dir = opendir(".");
 	if (dir == NULL)

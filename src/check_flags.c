@@ -23,9 +23,7 @@ static void	set_flags(t_flags *f, char c)
 int		check_flags(char *argv, t_flags *f)
 {
 	if (*(argv++) == '-')
-	{
 		while (*argv)
 			set_flags(f, *(argv++));
-	}
 	return (f->bit > 0 ? 1 : 0);
 }
