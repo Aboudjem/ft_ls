@@ -8,7 +8,7 @@ void 	print_lst(t_ls *lst)
 	while (tmp)
 	{
 		ft_putstr(tmp->data.name);
-		ft_putstr("   ");
+		ft_putstr("\n");
 		tmp = tmp->next;
 	}
 }
@@ -17,11 +17,6 @@ t_ls	*stock_list(t_ls *lst, t_dir *file, DIR *dir)
 {
 	t_stat buf;
 
-	if(!(file = readdir(dir)))
-	{
-		perror("readdir :");
-		return(0);
-	}
 	while((file = readdir(dir)))
 	{
 		stat(file->d_name, &buf);
@@ -30,33 +25,20 @@ t_ls	*stock_list(t_ls *lst, t_dir *file, DIR *dir)
 	return (lst);
 }
 
-void		ls_simple(void)
+void		ls_dir(char *d)
 {
 	t_ls *lst;
-	if(!(lst = (t_ls*)ft_memalloc(sizeof(t_ls))))  // initialise le premier element de ma list vaux mieux en faire une fct
+	if(!(lst = (t_ls*)ft_memalloc(sizeof(t_ls))))
 		exit (0);
 	DIR *dir;
 	struct dirent *file = NULL;
-	dir = opendir(".");
+	dir = opendir(d);
 	if (dir == NULL)
-	{
-		ft_putstr("DIR = NULL\n");
 		exit(0);
-	}
 	stock_list(lst, file, dir);
-	print_lst(lst);	
+	print_lst(lst);
 	if (closedir(dir) == -1)
 		exit(-1);
-}
-
-void	init_flags(t_flags *f)
-{	
-	f->l = 0;
-	f->a = 0;
-	f->r = 0;
-	f->t = 0;
-	f->rr = 0;
-	f->bit = 0;
 }
 
 int			main(int argc, char *argv[])
@@ -67,7 +49,7 @@ int			main(int argc, char *argv[])
 
 	i = 1;
 	if (argc == 1)
-		ls_simple();
+		ls_dir(".");
 	while (i < argc && check_flags(argv[i], &f))
 		ft_putnbr(i++);
 	while (i < argc)

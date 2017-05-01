@@ -89,7 +89,7 @@ t_ls				*add_list(t_ls *lst, t_dir *file, t_stat buf);
 
 void			 	print_lst(t_ls *lst);
 t_ls				*stock_list(t_ls *lst, t_dir *file, DIR *dir);
-void				ls_simple(void);
+void				ls_dir(char *d);
 
 /*
 ** get
