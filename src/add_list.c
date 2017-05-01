@@ -39,5 +39,5 @@ t_ls	*add_list(t_ls *lst, t_dir *file, t_stat buf)
 			tmp = tmp->next;
 		tmp->next = new_lst(file, buf);
 	}
-	return(lst); // on renvoi le maillon de depart de list;
+	return(lst);
 }
