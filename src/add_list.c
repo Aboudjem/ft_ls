@@ -7,7 +7,7 @@ void	add_infos(t_dir *file, t_stat buf, t_ls *ls)
 	ls->data.user = get_uid(buf.st_uid);
 	ls->data.group = get_gid(buf.st_gid);
 	ls->data.size = buf.st_size;
-	ls->data.time = get_time(buf.st_mtime);
+	ls->data.time = ft_strdup(get_time(buf.st_mtime));
 	ls->data.name = ft_strdup(file->d_name);
 	ls->data.t = (size_t)buf.st_mtime;
 	ls->next = NULL;

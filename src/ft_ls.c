@@ -31,17 +31,17 @@ void 	print_lst(t_ls *lst, t_flags f)
 		sort_list_time(tmp);
 	while (tmp)
 	{
-		if (!(CHECK_BIT(f.bit, A)) && tmp->data.name[0] == '.')
-			tmp = tmp->next;
-		else
-		{
-			if (!(CHECK_BIT(f.bit, L)))
-				ft_putstr(tmp->data.name);
-			else
+		// if (!(CHECK_BIT(f.bit, A)) && tmp->data.name[0] == '.')
+		// 	tmp = tmp->next;
+		// else
+		// {
+		// 	if (!(CHECK_BIT(f.bit, L)))
+		// 		ft_putstr(tmp->data.name);
+		// 	else
 				print_full(tmp->data, i);
 				ft_putstr("\n");
 				tmp = tmp->next;
-		}
+		// }
 	}
 }
 

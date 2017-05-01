@@ -20,5 +20,4 @@ void	print_full(t_data d, size_t i)
 	ft_putstr(d.time);
 	ft_putstr(" ");
 	ft_putstr(d.name);
-
 }
