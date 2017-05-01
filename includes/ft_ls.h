@@ -77,12 +77,15 @@ typedef struct		s_ls
 	t_data			data;
 	struct s_ls		*next;
 }					t_ls;
+size_t	ft_get_size(t_ls *tmp);
 
-void	print_full(t_data data);
+void	print_full(t_data data, size_t i);
 void	sort_list(t_ls *lst);
 void	swap_data(t_ls *tmp);
 void	sort_list_time(t_ls *lst);
 void	sort_reverse(t_ls *lst);
+int             ft_len_int(int nbr);
+
 // int					check_sort(t_ls *lst);
 void				init_flags(t_flags *f);
 void				print_flags(t_flags f);

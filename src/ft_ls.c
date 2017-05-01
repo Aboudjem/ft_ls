@@ -11,7 +11,7 @@ size_t	ft_get_size(t_ls *tmp)
 			i = tmp->data.size;
 		tmp = tmp->next;
 	}
-return(i);
+return(ft_len_int(i));
 }
 
 void 	print_lst(t_ls *lst, t_flags f)
@@ -38,7 +38,7 @@ void 	print_lst(t_ls *lst, t_flags f)
 			if (!(CHECK_BIT(f.bit, L)))
 				ft_putstr(tmp->data.name);
 			else
-				print_full(tmp->data);
+				print_full(tmp->data, i);
 				ft_putstr("\n");
 				tmp = tmp->next;
 		}
