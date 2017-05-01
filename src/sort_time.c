@@ -18,11 +18,16 @@ void	sort_list_time(t_ls *lst)
 	tmp = lst;
 	while (check_sort_time(tmp) == 0)
 	{
-		if (tmp->data.t < tmp->next->data.t)
+		while(tmp->next)
 		{
-			swap_data(tmp);
-			tmp = lst;
+			if (tmp->data.t < tmp->next->data.t)
+			{
+				// swap_data(tmp);
+				tmp = lst;
+			}
+			else
+				tmp = tmp->next;
 		}
-		tmp = tmp->next;
+		tmp = lst;
 	}
 }

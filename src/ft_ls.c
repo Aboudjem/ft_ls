@@ -18,15 +18,13 @@ void 	print_lst(t_ls *lst, t_flags f)
 {
 	t_ls *tmp;
 	size_t i;
+
 	tmp = lst;
-
 	i = ft_get_size(tmp);
-
 	if (CHECK_BIT(f.bit, R))
 		sort_reverse(tmp);
 	else
 		sort_list(tmp);
-
 	if (CHECK_BIT(f.bit, T))
 		sort_list_time(tmp);
 	while (tmp)
