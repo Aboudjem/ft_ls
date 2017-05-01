@@ -1,15 +1,47 @@
 #include "ft_ls.h"
 
-void 	print_lst(t_ls *lst)
+size_t	ft_get_size(t_ls *tmp)
+{
+	size_t i;
+
+	i = 0;
+	while(tmp)
+	{
+		if (tmp->data.size > i)
+			i = tmp->data.size;
+		tmp = tmp->next;
+	}
+return(i);
+}
+
+void 	print_lst(t_ls *lst, t_flags f)
 {
 	t_ls *tmp;
+	size_t len_size;
 	tmp = lst;
-	sort_list(tmp);
+
+	len_size = ft_get_size(tmp);
+
+	if (CHECK_BIT(f.bit, R))
+		sort_reverse(tmp);
+	else
+		sort_list(tmp);
+
+	if (CHECK_BIT(f.bit, T))
+		sort_list_time(tmp);
 	while (tmp)
 	{
-		ft_putstr(tmp->data.name);
-		ft_putstr("\n");
-		tmp = tmp->next;
+		// if (!(CHECK_BIT(f.bit, A)) && tmp->data.name[0] == '.')
+		// 	tmp = tmp->next;
+		// else
+		// {
+		// 	if (!(CHECK_BIT(f.bit, L)))
+		// 		ft_putstr(tmp->data.name);
+		// 	else
+				print_full(tmp->data);
+				ft_putstr("\n");
+				tmp = tmp->next;
+		// }
 	}
 }
 
@@ -25,7 +57,7 @@ t_ls	*stock_list(t_ls *lst, t_dir *file, DIR *dir)
 	return (lst);
 }
 
-void		ls_dir(char *d)
+void		ls_dir(char *d, t_flags f)
 {
 	t_ls *lst;
 	if(!(lst = (t_ls*)ft_memalloc(sizeof(t_ls))))
@@ -36,7 +68,7 @@ void		ls_dir(char *d)
 	if (dir == NULL)
 		exit(0);
 	stock_list(lst, file, dir);
-	print_lst(lst);
+	print_lst(lst, f);
 	if (closedir(dir) == -1)
 		exit(-1);
 }
@@ -49,9 +81,12 @@ int			main(int argc, char *argv[])
 
 	i = 1;
 	if (argc == 1)
-		ls_dir(".");
+		ls_dir(".", f);
+	else
+	{
+		
 	while (i < argc && check_flags(argv[i], &f))
-		ft_putnbr(i++);
+			i++;
 	while (i < argc)
 	{
 		if (!(opendir(argv[i])))
@@ -60,7 +95,9 @@ int			main(int argc, char *argv[])
 			printf("%s\n",argv[i]);
 		i++;
 	}
+		ls_dir(".", f);
 	print_flags(f);
+	}
 	return(0);
 }
 

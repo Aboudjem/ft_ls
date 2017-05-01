@@ -11,7 +11,7 @@ static	int		check_sort(t_ls *lst)
 	return (1);
 }
 
-static	void	swap_data(t_ls *tmp)
+void	swap_data(t_ls *tmp)
 {
 	t_data data;
 
@@ -27,7 +27,7 @@ void	sort_list(t_ls *lst)
 	tmp = lst;
 	while (check_sort(tmp) == 0)
 	{
-		if (strcmp(tmp->data.name, tmp->next->data.name) > 0)
+		if (ft_strcmp(tmp->data.name, tmp->next->data.name) > 0)
 		{
 			swap_data(tmp);
 			tmp = lst;

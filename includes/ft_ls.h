@@ -70,14 +70,19 @@ typedef struct 		s_data
 	long			size;
 	char			*time;
 	char			*name;
+	size_t			t;
 }					t_data;
 typedef struct		s_ls
 {
 	t_data			data;
 	struct s_ls		*next;
 }					t_ls;
-void	sort_list(t_ls *lst);
 
+void	print_full(t_data data);
+void	sort_list(t_ls *lst);
+void	swap_data(t_ls *tmp);
+void	sort_list_time(t_ls *lst);
+void	sort_reverse(t_ls *lst);
 // int					check_sort(t_ls *lst);
 void				init_flags(t_flags *f);
 void				print_flags(t_flags f);
@@ -87,9 +92,9 @@ void				add_infos(t_dir *file, t_stat buf, t_ls *ls);
 t_ls 				*new_lst(t_dir *file, t_stat buf);
 t_ls				*add_list(t_ls *lst, t_dir *file, t_stat buf);
 
-void			 	print_lst(t_ls *lst);
+void			 	print_lst(t_ls *lst, t_flags f);
 t_ls				*stock_list(t_ls *lst, t_dir *file, DIR *dir);
-void				ls_dir(char *d);
+void				ls_dir(char *d, t_flags f);
 
 /*
 ** get
