@@ -29,6 +29,7 @@ t_ls	*add_list(t_ls *lst, t_dir *file, t_stat buf)
 
 	if (!lst->data.name)
 	{
+		lst->back = NULL;
 		add_infos(file, buf, lst);
 		return(lst);
 	}
@@ -38,6 +39,7 @@ t_ls	*add_list(t_ls *lst, t_dir *file, t_stat buf)
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new_lst(file, buf);
+		tmp->next->back = tmp;
 	}
 	return(lst);
 }

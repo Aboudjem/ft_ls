@@ -75,6 +75,7 @@ typedef struct 		s_data
 typedef struct		s_ls
 {
 	t_data			data;
+	struct s_ls		*back;
 	struct s_ls		*next;
 }					t_ls;
 size_t	ft_get_size(t_ls *tmp);

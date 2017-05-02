@@ -27,7 +27,7 @@ void 	print_lst(t_ls *lst, t_flags f)
 		sort_list(tmp);
 	if (CHECK_BIT(f.bit, T))
 		sort_list_time(tmp);
-	while (tmp)
+	while (tmp->next)
 	{
 		if (!(CHECK_BIT(f.bit, A)) && tmp->data.name[0] == '.')
 			tmp = tmp->next;
@@ -37,9 +37,18 @@ void 	print_lst(t_ls *lst, t_flags f)
 				ft_putstr(tmp->data.name);
 			else
 				print_full(tmp->data, i);
-				ft_putstr("\n");
-				tmp = tmp->next;
+			ft_putstr("\n");
+			tmp = tmp->next;
 		}
+	}
+
+	ft_putstr("\n\n");
+	while(tmp)
+	{
+		print_full(tmp->data, i);
+		tmp = tmp->back;
+				ft_putstr("\n");
+
 	}
 }
 
