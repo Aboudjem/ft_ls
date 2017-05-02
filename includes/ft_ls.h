@@ -86,6 +86,8 @@ void	swap_data(t_ls *tmp);
 void	sort_list_time(t_ls *lst);
 void	sort_reverse(t_ls *lst);
 int             ft_len_int(int nbr);
+void	sorting(t_ls *tmp, t_flags f);
+void	print_data(t_ls *tmp, t_flags f, size_t i);
 
 // int					check_sort(t_ls *lst);
 void				init_flags(t_flags *f);
@@ -97,7 +99,7 @@ t_ls 				*new_lst(t_dir *file, t_stat buf);
 t_ls				*add_list(t_ls *lst, t_dir *file, t_stat buf);
 
 void			 	print_lst(t_ls *lst, t_flags f);
-t_ls				*stock_list(t_ls *lst, t_dir *file, DIR *dir);
+t_ls				*stock_list(t_ls *lst, t_dir *file, DIR *dir, char *d);
 void				ls_dir(char *d, t_flags f);
 
 /*
@@ -128,6 +130,7 @@ char				*ft_strchr(char *s, int c);
 char				*ft_strdup(const char *s1);
 void				ft_bzero(void *s, size_t n);
 char				**ft_strsplit(char *s, char c);
+char	*ft_strjoin(char const *s1, char const *s2);
 void				ft_putstr_fd(char const *s, int fd);
 void				*ft_memset(void *b, int c, size_t len);
 int					ft_strcmp(const char *s1, const char *s2);

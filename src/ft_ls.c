@@ -8,58 +8,25 @@ size_t	ft_get_size(t_ls *tmp)
 	while(tmp)
 	{
 		if ((size_t)tmp->data.size > i)
-			i = tmp->data.size;
+			i = (size_t)tmp->data.size;
 		tmp = tmp->next;
 	}
-return(ft_len_int(i));
+return((size_t)ft_len_int((int)i));
 }
 
-void 	print_lst(t_ls *lst, t_flags f)
-{
-	t_ls *tmp;
-	size_t i;
-
-	tmp = lst;
-	i = ft_get_size(tmp);
-	if (CHECK_BIT(f.bit, R))
-		sort_reverse(tmp);
-	else
-		sort_list(tmp);
-	if (CHECK_BIT(f.bit, T))
-		sort_list_time(tmp);
-	while (tmp->next)
-	{
-		if (!(CHECK_BIT(f.bit, A)) && tmp->data.name[0] == '.')
-			tmp = tmp->next;
-		else
-		{
-			if (!(CHECK_BIT(f.bit, L)))
-				ft_putstr(tmp->data.name);
-			else
-				print_full(tmp->data, i);
-			ft_putstr("\n");
-			tmp = tmp->next;
-		}
-	}
-
-	ft_putstr("\n\n");
-	while(tmp)
-	{
-		print_full(tmp->data, i);
-		tmp = tmp->back;
-				ft_putstr("\n");
-
-	}
-}
-
-t_ls	*stock_list(t_ls *lst, t_dir *file, DIR *dir)
+t_ls	*stock_list(t_ls *lst, t_dir *file, DIR *dir, char *d)
 {
 	t_stat buf;
+	char *path;
+	path = NULL;
 
 	while((file = readdir(dir)))
 	{
-		stat(file->d_name, &buf);
-		lst = add_list(lst, file, buf);
+		path = ft_strjoin(d, file->d_name);
+		if ((stat(path, &buf)) == -1)
+			stat(file->d_name, &buf);
+		add_list(lst, file, buf);
+		free(path);
 	}
 	return (lst);
 }
@@ -70,11 +37,13 @@ void		ls_dir(char *d, t_flags f)
 	if(!(lst = (t_ls*)ft_memalloc(sizeof(t_ls))))
 		exit (0);
 	DIR *dir;
-	struct dirent *file = NULL;
+	t_dir *file;
+	file = NULL;
 	dir = opendir(d);
 	if (dir == NULL)
 		exit(0);
-	stock_list(lst, file, dir);
+	stock_list(lst, file, dir, d);
+	sorting(lst, f);
 	print_lst(lst, f);
 	if (closedir(dir) == -1)
 		exit(-1);
@@ -91,19 +60,27 @@ int			main(int argc, char *argv[])
 		ls_dir(".", f);
 	else
 	{
-		
-	while (i < argc && check_flags(argv[i], &f))
+		while (i < argc && check_flags(argv[i], &f))
+				{
+					ft_putstr(argv[i]);
+					i++;
+				}
+		while (i < argc)
+		{
+			if (!(opendir(argv[i])))
+				printf("ls: %s: No such file or directory\n", argv[i]);
+			else
+			{
+				ft_putstr(argv[i]);
+				ft_putstr(":\n");
+				ls_dir(argv[i], f);
+				ft_putstr("\n");
+			}
 			i++;
-	while (i < argc)
-	{
-		if (!(opendir(argv[i])))
-			printf("ls: %s: No such file or directory\n", argv[i]);
-		else
-			printf("%s\n",argv[i]);
-		i++;
-	}
+		}
+		ft_putstr("\n");
 		ls_dir(".", f);
-	print_flags(f);
+		print_flags(f);
 	}
 	return(0);
 }
