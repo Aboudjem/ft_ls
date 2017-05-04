@@ -25,6 +25,8 @@ t_ls	*stock_list(t_ls *lst, t_dir *file, DIR *dir, char *d)
 		path = ft_strjoin(d, file->d_name);
 		if ((stat(path, &buf)) == -1)
 			stat(file->d_name, &buf);
+		if(get_type(file->d_type) == 'd')
+			printf("[%s]\n", path);
 		add_list(lst, file, buf);
 		free(path);
 	}
@@ -57,30 +59,15 @@ int			main(int argc, char *argv[])
 
 	i = 1;
 	if (argc == 1)
-		ls_dir(".", f);
+		ls_dir("./", f);
 	else
 	{
-		while (i < argc && check_flags(argv[i], &f))
-				{
-					ft_putstr(argv[i]);
+		while (check_flags(argv[i], &f) && argv[i][0] == '-')
 					i++;
-				}
+		if (i == argc)
+			ls_dir("./", f);
 		while (i < argc)
-		{
-			if (!(opendir(argv[i])))
-				printf("ls: %s: No such file or directory\n", argv[i]);
-			else
-			{
-				ft_putstr(argv[i]);
-				ft_putstr(":\n");
-				ls_dir(argv[i], f);
-				ft_putstr("\n");
-			}
-			i++;
-		}
-		ft_putstr("\n");
-		ls_dir(".", f);
-		print_flags(f);
+			print_dir(argv[i++], f);
 	}
 	return(0);
 }

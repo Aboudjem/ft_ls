@@ -1,5 +1,18 @@
 #include "ft_ls.h"
 
+void	print_dir(char *argv, t_flags f)
+{
+			if (!(opendir(argv)))
+				printf("ls: %s: No such file or directory\n", argv);
+			else
+			{
+				ft_putstr("\n");
+				ft_putstr(argv);
+				ft_putstr(":\n");
+				ls_dir(ft_strjoin(argv, "/") , f);
+			}
+}
+
 void	print_full(t_data d, size_t i)
 {
 	char *s;

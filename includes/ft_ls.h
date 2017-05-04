@@ -85,7 +85,7 @@ void	sort_list(t_ls *lst);
 void	swap_data(t_ls *tmp);
 void	sort_list_time(t_ls *lst);
 void	sort_reverse(t_ls *lst);
-int             ft_len_int(int nbr);
+int     ft_len_int(int nbr);
 void	sorting(t_ls *tmp, t_flags f);
 void	print_data(t_ls *tmp, t_flags f, size_t i);
 
@@ -101,7 +101,7 @@ t_ls				*add_list(t_ls *lst, t_dir *file, t_stat buf);
 void			 	print_lst(t_ls *lst, t_flags f);
 t_ls				*stock_list(t_ls *lst, t_dir *file, DIR *dir, char *d);
 void				ls_dir(char *d, t_flags f);
-
+void				print_dir(char *argv, t_flags f);
 /*
 ** get
 */
