@@ -81,6 +81,7 @@ typedef struct 		s_data
 	char			*name;
 	size_t			t;
 }					t_data;
+
 typedef struct		s_ls
 {
 	t_data			data;
@@ -102,8 +103,8 @@ typedef struct	s_type
 	int						i;
 	int						j;
 	int						fd;
-	int 				pad;
-	int 				pad2;
+	int 					pad;
+	char 					pad2;
 }							t_conv;
 
 

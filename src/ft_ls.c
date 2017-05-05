@@ -35,6 +35,58 @@ void		ls_dir(char *d, t_flags f)
 		exit(-1);
 }
 
+void		stock_r(t_ls *lst, t_flags f, char *d)
+{
+	DIR *dir;
+	char *path;
+	if (!(dir = opendir(d)))
+		exit (0);
+	t_dir *file;
+	if (dir == NULL)
+		exit(0);
+	while ((file = readdir(dir)))
+	{
+		if ((get_type(file->d_type) == 'd'))
+		{
+			if ((ft_strcmp(file->d_name, "..")) && (ft_strcmp(file->d_name, ".")))
+			{
+
+			path = ft_strjoin(d, "/");
+			path = ft_strjoin(path, file->d_name);
+			ft_printf("[%s]", path);
+			stock_r(lst, f, path);
+			}
+		}
+		ft_putstr(file->d_name);
+		ft_putstr("\n");
+	}
+		ft_putstr("\n");
+
+}
+
+void		ls_r(t_flags f, char *d)
+{
+	t_ls *lst;
+	if(!(lst = (t_ls*)ft_memalloc(sizeof(t_ls))))
+		exit (0);
+	DIR *dir;
+	dir = opendir(d);
+	t_dir *file;
+
+	file = NULL;
+	while ((file = readdir(dir)))
+	{
+		if ((get_type(file->d_type) == 'd'))
+			if ((ft_strcmp(file->d_name, "..")) && (ft_strcmp(file->d_name, ".")))
+					{
+						ft_printf("%s/%s:\n", d, file->d_name);
+						stock_r(lst, f, file->d_name);
+					}
+
+	}
+	// print_lst(lst, f);
+}
+
 int			main(int argc, char *argv[])
 {
 	int i;
@@ -42,17 +94,18 @@ int			main(int argc, char *argv[])
 	init_flags(&f);
 
 	i = 1;
-	if (argc == 1)
-		ls_dir(".", f);
-	else
-	{
-		while (check_flags(argv[i], &f) && argv[i][0] == '-')
-					i++;
-		if (i == argc)
-			ls_dir(".", f);
-		while (i < argc)
-			print_dir(argv[i++], f);
-	}
+	ls_r(f, ".");
+	// if (argc == 1)
+	// 	ls_dir(".", f);
+	// else
+	// {
+	// 	while (check_flags(argv[i], &f) && argv[i][0] == '-')
+	// 				i++;
+	// 	if (i == argc)
+	// 		ls_dir(".", f);
+	// 	while (i < argc)
+	// 		print_dir(argv[i++], f);
+	// }
 	return(0);
 }
 
