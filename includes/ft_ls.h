@@ -61,6 +61,14 @@ typedef struct		s_flags
 	int				rr;
 }					t_flags;
 
+typedef struct 		s_size
+{
+	size_t			link;
+	size_t			user;
+	size_t			group;
+	size_t			size;
+}					t_size;
+
 typedef struct 		s_data
 {
 	char			*mod;
@@ -78,16 +86,16 @@ typedef struct		s_ls
 	struct s_ls		*back;
 	struct s_ls		*next;
 }					t_ls;
-size_t	ft_get_size(t_ls *tmp);
+t_size	ft_get_size(t_ls *tmp);
 
-void	print_full(t_data data, size_t i);
+void	print_full(t_data data, t_size s);
 void	sort_list(t_ls *lst);
 void	swap_data(t_ls *tmp);
 void	sort_list_time(t_ls *lst);
 void	sort_reverse(t_ls *lst);
 int     ft_len_int(int nbr);
 void	sorting(t_ls *tmp, t_flags f);
-void	print_data(t_ls *tmp, t_flags f, size_t i);
+void	print_data(t_ls *tmp, t_flags f, t_size s);
 
 // int					check_sort(t_ls *lst);
 void				init_flags(t_flags *f);

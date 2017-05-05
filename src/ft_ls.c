@@ -1,18 +1,6 @@
 #include "ft_ls.h"
 
-size_t	ft_get_size(t_ls *tmp)
-{
-	size_t i;
 
-	i = 0;
-	while(tmp)
-	{
-		if ((size_t)tmp->data.size > i)
-			i = (size_t)tmp->data.size;
-		tmp = tmp->next;
-	}
-return((size_t)ft_len_int((int)i));
-}
 
 t_ls	*stock_list(t_ls *lst, t_dir *file, DIR *dir, char *d)
 {
@@ -25,8 +13,8 @@ t_ls	*stock_list(t_ls *lst, t_dir *file, DIR *dir, char *d)
 		path = ft_strjoin(d, file->d_name);
 		if ((stat(path, &buf)) == -1)
 			stat(file->d_name, &buf);
-		if(get_type(file->d_type) == 'd')
-			printf("[%s]\n", path);
+		// if(get_type(file->d_type) == 'd')
+		// 	printf("[%s]\n", path);
 		add_list(lst, file, buf);
 		free(path);
 	}
@@ -65,7 +53,7 @@ int			main(int argc, char *argv[])
 		while (check_flags(argv[i], &f) && argv[i][0] == '-')
 					i++;
 		if (i == argc)
-			ls_dir("./", f);
+			ls_dir("/", f);
 		while (i < argc)
 			print_dir(argv[i++], f);
 	}
