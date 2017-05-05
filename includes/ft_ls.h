@@ -105,7 +105,7 @@ int					check_flags(char *argv, t_flags *f);
 
 void				add_infos(t_dir *file, t_stat buf, t_ls *ls);
 t_ls 				*new_lst(t_dir *file, t_stat buf);
-t_ls				*add_list(t_ls *lst, t_dir *file, t_stat buf);
+void				add_list(t_ls *lst, t_dir *file, t_stat buf);
 
 void			 	print_lst(t_ls *lst, t_flags f);
 t_ls				*stock_list(t_ls *lst, t_dir *file, DIR *dir, char *d);

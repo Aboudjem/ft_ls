@@ -23,7 +23,7 @@ t_ls 	*new_lst(t_dir *file, t_stat buf)
 	return (ls);
 }
 
-t_ls	*add_list(t_ls *lst, t_dir *file, t_stat buf)
+void	add_list(t_ls *lst, t_dir *file, t_stat buf)
 {
 	t_ls *tmp;
 
@@ -31,7 +31,6 @@ t_ls	*add_list(t_ls *lst, t_dir *file, t_stat buf)
 	{
 		lst->back = NULL;
 		add_infos(file, buf, lst);
-		return(lst);
 	}
 	else
 	{
@@ -41,5 +40,4 @@ t_ls	*add_list(t_ls *lst, t_dir *file, t_stat buf)
 		tmp->next = new_lst(file, buf);
 		tmp->next->back = tmp;
 	}
-	return(lst);
 }

@@ -69,18 +69,15 @@ void	print_reverse(t_ls *tmp, t_flags f, t_size s)
 		{
 			if (!(CHECK_BIT(f.bit, A)) && tmp->data.name[0] == '.')
 					tmp = tmp->back;
-			else if (!(CHECK_BIT(f.bit, L)))
-				{
-					ft_putstr(tmp->data.name);
-					tmp = tmp->back;
-					ft_putstr("\n");
-				}
 			else
-				{
+			{
+				if (!(CHECK_BIT(f.bit, L)))
+					ft_putstr(tmp->data.name);
+				else
 					print_full(tmp->data, s);
-					tmp = tmp->back;
-					ft_putstr("\n");
-				}
+				tmp = tmp->back;
+				ft_putstr("\n");
+			}
 		}
 }
 
@@ -88,11 +85,10 @@ void 	print_lst(t_ls *lst, t_flags f)
 {
 	t_ls *tmp;
 	t_size s;
-	sorting(lst, f);
 
 	tmp = lst;
+	sorting(lst, f);
 	s = ft_get_size(tmp);
-
 	if (!(CHECK_BIT(f.bit, R)))
 		print_data(tmp, f, s);
 	else

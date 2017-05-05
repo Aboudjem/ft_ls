@@ -1,7 +1,5 @@
 #include "ft_ls.h"
 
-
-
 t_ls	*stock_list(t_ls *lst, t_dir *file, DIR *dir, char *d)
 {
 	t_stat buf;
