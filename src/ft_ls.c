@@ -4,15 +4,13 @@ t_ls	*stock_list(t_ls *lst, t_dir *file, DIR *dir, char *d)
 {
 	t_stat buf;
 	char *path;
-	path = NULL;
 
+	path = NULL;
 	while((file = readdir(dir)))
 	{
 		path = ft_strjoin(d, file->d_name);
 		if ((stat(path, &buf)) == -1)
 			stat(file->d_name, &buf);
-		// if(get_type(file->d_type) == 'd')
-		// 	printf("[%s]\n", path);
 		add_list(lst, file, buf);
 		free(path);
 	}
@@ -51,7 +49,7 @@ int			main(int argc, char *argv[])
 		while (check_flags(argv[i], &f) && argv[i][0] == '-')
 					i++;
 		if (i == argc)
-			ls_dir("/", f);
+			ls_dir(".", f);
 		while (i < argc)
 			print_dir(argv[i++], f);
 	}

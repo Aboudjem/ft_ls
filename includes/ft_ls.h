@@ -18,6 +18,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 #include <dirent.h>
 #include <string.h>
 #include <unistd.h>
@@ -86,6 +87,26 @@ typedef struct		s_ls
 	struct s_ls		*back;
 	struct s_ls		*next;
 }					t_ls;
+
+typedef struct	s_type
+{
+	unsigned long long int	u;
+	long long				d;
+	unsigned int			c;
+	va_list					arguments;
+	char					*s;
+	int						count;
+	int						len_return;
+	char					conv;
+	char					*print;
+	int						i;
+	int						j;
+	int						fd;
+	int 				pad;
+	int 				pad2;
+}							t_conv;
+
+
 t_size	ft_get_size(t_ls *tmp);
 
 void	print_full(t_data data, t_size s);
@@ -139,11 +160,34 @@ char				*ft_strchr(char *s, int c);
 char				*ft_strdup(const char *s1);
 void				ft_bzero(void *s, size_t n);
 char				**ft_strsplit(char *s, char c);
-char	*ft_strjoin(char const *s1, char const *s2);
+char				*ft_strjoin(char const *s1, char const *s2);
 void				ft_putstr_fd(char const *s, int fd);
 void				*ft_memset(void *b, int c, size_t len);
 int					ft_strcmp(const char *s1, const char *s2);
 char				*ft_strdup_color(const char *s1, char *color);
+void				ft_putchar_fd(char c, int fd);
+void				ft_putlnbr_fd(unsigned long int n, int fd);
+void				ft_putnbr_fd(long int n, int fd);
+char				*ft_strsub(char const *s, unsigned int start, size_t len);
+int					ft_isalpha(int c);
+
+/*
+ ** ft_printf.c
+*/
+void			len_return(t_conv *t);
+void			printstr(const char *s, t_conv *t);
+int				ft_printf(const char *format, ...);
+int				ft_dprintf(int fd, const char *format, ...);
+void			get_conv(const char *s, t_conv *t);
+void			which_conv(const char *s, int i, t_conv *t);
+void			conv_u(t_conv *t);
+void			conv_s(t_conv *t);
+char			next_conv(const char *s, int i);
+void			init(t_conv *t);
+void			init_start(t_conv *t);
+void			conv_d(t_conv *t);
+void			conv_c(t_conv *t);
+void			which_conv(const char *s, int i, t_conv *t);
 
 
 #endif

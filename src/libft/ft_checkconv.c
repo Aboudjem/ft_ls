@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_checkconv.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aboudjem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/21 02:05:39 by aboudjem          #+#    #+#             */
-/*   Updated: 2017/04/21 02:05:42 by aboudjem         ###   ########.fr       */
+/*   Created: 2017/03/06 11:18:03 by aboudjem          #+#    #+#             */
+/*   Updated: 2017/03/09 00:37:06 by aboudjem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	ft_putnbr(int n)
+void	which_conv(const char *s, int i, t_conv *t)
 {
-	long int	u_nbr;
-
-	u_nbr = n;
-	if (n < 0)
+	t->count = 0;
+	if (s[i] && s[i + 1])
 	{
-		ft_putchar('-');
-		u_nbr = -n;
+		i++;
+		t->count++;
 	}
-	if (u_nbr / 10)
-		ft_putnbr((int)(u_nbr / 10));
-	ft_putchar(u_nbr % 10 + '0');
+	while (next_conv(s, i) == 0 && s[i + 1])
+	{
+		t->count++;
+		i++;
+	}
+	if (next_conv(s, i) == 1)
+		t->count--;
+	t->conv = next_conv(s, i);
+	get_conv(s, t);
 }

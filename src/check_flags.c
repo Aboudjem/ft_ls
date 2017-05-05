@@ -14,8 +14,8 @@ static void	set_flags(t_flags *f, char c)
 		f->bit |= RR;
 	else
 	{
-		printf("ls: illegal option -- %c\n", c);
-		printf("usage: ls [-lartR] [file ...]\n");
+		ft_printf("ls: illegal option -- %c\n", c);
+		ft_printf("usage: ls [-lartR] [file ...]\n");
 		exit (0);
 	}
 }

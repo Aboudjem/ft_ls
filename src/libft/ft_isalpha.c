@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aboudjem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/21 02:05:39 by aboudjem          #+#    #+#             */
-/*   Updated: 2017/04/21 02:05:42 by aboudjem         ###   ########.fr       */
+/*   Created: 2016/09/29 17:57:31 by aboudjem          #+#    #+#             */
+/*   Updated: 2017/03/06 10:16:47 by aboudjem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	ft_putnbr(int n)
+int	ft_isalpha(int c)
 {
-	long int	u_nbr;
-
-	u_nbr = n;
-	if (n < 0)
-	{
-		ft_putchar('-');
-		u_nbr = -n;
-	}
-	if (u_nbr / 10)
-		ft_putnbr((int)(u_nbr / 10));
-	ft_putchar(u_nbr % 10 + '0');
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (1);
+	else
+		return (0);
 }

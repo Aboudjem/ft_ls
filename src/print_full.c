@@ -3,12 +3,10 @@
 void	print_dir(char *argv, t_flags f)
 {
 			if (!(opendir(argv)))
-				printf("ls: %s: No such file or directory\n", argv);
+				ft_printf("ls: %s: No such file or directory\n", argv);
 			else
 			{
-				ft_putstr("\n");
-				ft_putstr(argv);
-				ft_putstr(":\n");
+				ft_printf("\n%s:\n", argv);
 				ls_dir(ft_strjoin(argv, "/") , f);
 			}
 }
@@ -24,23 +22,12 @@ void	print_full(t_data d, t_size s)
 	s2 = ft_strnew(s.user + 1);
 	s3 = ft_strnew(s.group + 2);
 	s4 = ft_strnew(s.size + 2);
-	ft_putstr(d.mod);
 	ft_memset(s1, ' ', (s.link - (size_t)ft_len_int((int)d.link) + 2));
-	ft_putstr(s1);
-	ft_putnbr((int)d.link);
 	ft_memset(s2, ' ', (s.user - ft_strlen(d.user) + 1));
-	ft_putstr(s2);
-	ft_putstr(d.user);
 	ft_memset(s3, ' ', (s.group - ft_strlen(d.group) + 2));
-	ft_putstr(s3);
-	ft_putstr(d.group);
 	ft_memset(s4, ' ', (s.size - (size_t)ft_len_int((int)d.size) + 3));
-	ft_putstr(s4);
-	ft_putnbr((int)d.size);
-	ft_putstr(" ");
-	ft_putstr(d.time);
-	ft_putstr(" ");
-	ft_putstr(d.name);
+	ft_printf("%s%s%d%s%s%s%s%s%d %s %s", d.mod,s1,d.link, s2, d.user, s3, d.group,
+		s4, d.size, d.time, d.name);
 }
 
 void	print_data(t_ls *tmp, t_flags f, t_size s)

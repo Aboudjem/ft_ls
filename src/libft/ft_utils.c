@@ -1,28 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aboudjem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/21 02:05:39 by aboudjem          #+#    #+#             */
-/*   Updated: 2017/04/21 02:05:42 by aboudjem         ###   ########.fr       */
+/*   Created: 2017/03/06 09:20:50 by aboudjem          #+#    #+#             */
+/*   Updated: 2017/03/29 06:10:40 by aboudjem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	ft_putnbr(int n)
+void	init_start(t_conv *t)
 {
-	long int	u_nbr;
+	t->i = 0;
+	t->j = 0;
+}
 
-	u_nbr = n;
-	if (n < 0)
+char	next_conv(const char *s, int i)
+{
+	int		j;
+	char	*conv;
+
+	j = 0;
+	conv = "sdiuc";
+	while (conv[j] != '\0')
 	{
-		ft_putchar('-');
-		u_nbr = -n;
+		if (s[i] == conv[j])
+			return (conv[j]);
+		j++;
 	}
-	if (u_nbr / 10)
-		ft_putnbr((int)(u_nbr / 10));
-	ft_putchar(u_nbr % 10 + '0');
+	return (0);
+}
+
+void	init(t_conv *t)
+{
+	t->len_return = 0;
 }

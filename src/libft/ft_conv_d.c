@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_conv_d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aboudjem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/21 02:05:39 by aboudjem          #+#    #+#             */
-/*   Updated: 2017/04/21 02:05:42 by aboudjem         ###   ########.fr       */
+/*   Created: 2017/03/06 09:34:10 by aboudjem          #+#    #+#             */
+/*   Updated: 2017/03/29 06:19:14 by aboudjem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	ft_putnbr(int n)
+void	conv_d(t_conv *t)
 {
-	long int	u_nbr;
-
-	u_nbr = n;
-	if (n < 0)
-	{
-		ft_putchar('-');
-		u_nbr = -n;
-	}
-	if (u_nbr / 10)
-		ft_putnbr((int)(u_nbr / 10));
-	ft_putchar(u_nbr % 10 + '0');
+	init(t);
+	ft_putnbr_fd(t->d, t->fd);
+	t->len_return = ft_len_int(t->d);
 }
