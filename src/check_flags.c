@@ -24,11 +24,11 @@ int		check_flags(char *argv, t_flags *f)
 {
 	int i;
 
-	i = f->bit;
 	if (!argv)
 		return(0);
 	if (*(argv++) == '-')
 		while (*argv)
 			set_flags(f, *(argv++));
-	return (i != f->bit ? 1 : 0);
+	i = f->bit;
+	return (i != 0 ? 1 : 0);
 }

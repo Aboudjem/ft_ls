@@ -96,6 +96,7 @@ void	sort_reverse(t_ls *lst);
 int     ft_len_int(int nbr);
 void	sorting(t_ls *tmp, t_flags f);
 void	print_data(t_ls *tmp, t_flags f, t_size s);
+void	print_reverse(t_ls *tmp, t_flags f, t_size s);
 
 // int					check_sort(t_ls *lst);
 void				init_flags(t_flags *f);
